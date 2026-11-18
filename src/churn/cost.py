@@ -26,7 +26,8 @@ def realized_profit(y, contact, monthly, offer_cost=config.OFFER_COST, save_rate
     y, contact = np.asarray(y).astype(bool), np.asarray(contact).astype(bool)
     value = customer_value(monthly, lost_months)
     saved_revenue = save_rate * value[contact & y].sum()
-    cost = offer_cost * contact.sum()
+    # 혜택 비용은 고정 금액(숫자 하나)이거나 고객별 금액(배열)일 수 있다
+    cost = float(np.broadcast_to(np.asarray(offer_cost, dtype=float), contact.shape)[contact].sum())
     return {
         "contacted": int(contact.sum()),
         "contact_rate": float(contact.mean()),
@@ -113,3 +114,33 @@ def bootstrap_profit_diff(y, contact_a, contact_b, monthly, n: int = config.N_BO
     boots = [d[rng.integers(0, len(d), len(d))].sum() for _ in range(n)]
     lo, hi = np.percentile(boots, [2.5, 97.5])
     return {"diff": float(d.sum()), "ci_low": float(lo), "ci_high": float(hi)}
+
+
+def proportional_offer_table(y, p, monthly, y_tr, p_tr, monthly_tr, discount_months=(0.5, 1.0, 2.0),
+                             save_rate=config.SAVE_RATE, lost_months=config.LOST_MONTHS) -> pd.DataFrame:
+    """혜택이 '월 요금 m개월분 할인'처럼 요금에 비례할 때.
+    기대값 = p × 남는 비율 × 월 요금 × L − 월 요금 × m 이므로 월 요금이 약분되어
+    기준이 모든 고객에게 같은 확률(m / (남는 비율 × L))이 된다. 이때는 확률 순으로 고르는 게 맞다.
+    정액 혜택 규칙을 그대로 쓰면 어떻게 되는지도 함께 본다."""
+    rows = []
+    monthly = np.asarray(monthly, float)
+    for m in discount_months:
+        offer = monthly * m
+        offer_tr = np.asarray(monthly_tr, float) * m
+        threshold = m / (save_rate * lost_months)
+        args = dict(save_rate=save_rate, lost_months=lost_months)
+        # 비례 혜택에 맞는 규칙 (= 확률 기준 하나)
+        right = realized_profit(y, cost_rule(p, monthly, offer, **args), monthly, offer, **args)
+        # 정액 $40 가정으로 만든 규칙을 그대로 쓴 경우
+        wrong = realized_profit(y, cost_rule(p, monthly, config.OFFER_COST, **args), monthly, offer, **args)
+        # 학습 데이터로 고른 확률 상위 k%
+        shares = np.round(np.arange(0, 1.0001, 0.01), 2)
+        tr = [realized_profit(y_tr, top_share_contact(p_tr, s), monthly_tr, offer_tr, **args)["profit"] for s in shares]
+        share = float(shares[int(np.argmax(tr))])
+        topk = realized_profit(y, top_share_contact(p, share), monthly, offer, **args)
+        all_ = realized_profit(y, np.ones(len(y), bool), monthly, offer, **args)
+        rows.append({"discount_months": m, "threshold_prob": threshold,
+                     "rule_contacted": right["contacted"], "rule_profit": right["profit"],
+                     "fixed_rule_contacted": wrong["contacted"], "fixed_rule_profit": wrong["profit"],
+                     "topk_share": share, "topk_profit": topk["profit"], "contact_all_profit": all_["profit"]})
+    return pd.DataFrame(rows)

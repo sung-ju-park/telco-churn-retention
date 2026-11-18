@@ -15,7 +15,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 
 sys.path.insert(0, str(Path(__file__).resolve().parent / "src"))
-from churn import config, cost, db, modeling, monitoring, plotting  # noqa: E402
+from churn import calllist, config, cost, db, experiment, modeling, monitoring, plotting  # noqa: E402
 
 warnings.filterwarnings("ignore")
 FEATURES = config.NUMERIC + config.CATEGORICAL
@@ -148,6 +148,37 @@ def main() -> None:
         "weighted_max_loss": float(loss.max()),
     }
     plotting.sensitivity_heatmap(sens, config.LOST_MONTHS, config.FIG_DIR / "06_sensitivity.png")
+
+    # 5-1. 상담원용 연락 대상 리스트 (평가 고객을 '이번 달 대상'으로 가정)
+    reasons = calllist.reason_codes(fitted["logit"], X_tr, X_te)
+    calllist.write_scores(data.loc[X_te.index, "customer_id"], p_main, monthly, reasons)
+    calls = db.query("call_list.sql")
+    calls.to_csv(TABLES / "call_list.csv", index=False, encoding="utf-8-sig")  # 엑셀에서 바로 열리게
+    top_reason = reasons.loc[rule_main, "reason_1"].str.replace(r"가입 \d+개월·월 \$\d+", "가입 기간·요금", regex=True)
+    out["call_list"] = {
+        "rows": len(calls),
+        "matches_cost_rule": bool(len(calls) == int(rule_main.sum())),
+        "top_reason_share": top_reason.value_counts(normalize=True).round(3).to_dict(),
+        "talk_point_counts": calls["talk_point"].value_counts().to_dict(),
+        "in_1month_discount_list": int(calls["in_1month_discount_list"].sum()),
+        "head": calls.head(10).to_dict(orient="records"),
+    }
+
+    # 5-2. 남는 비율을 재는 비교 집단 실험 설계
+    risk_value = p_main * cost.customer_value(monthly)
+    base_churn = float(p_main[rule_main].mean())
+    design = experiment.design_table(base_churn, float(risk_value[rule_main].mean()), config.OFFER_COST)
+    design.to_csv(TABLES / "experiment_design.csv", index=False)
+    out["experiment"] = {"eligible_mean_pred": base_churn, "eligible_actual_rate": float(yv[rule_main].mean()),
+                         "table": design.to_dict(orient="records"),
+                         "n_connected_for_pm5pp": {f"{s:.0%}": experiment.n_for_precision(base_churn, s, 0.05)
+                                                   for s in (0.1, 0.2, 0.3)}}
+
+    # 5-3. 혜택이 요금 비례 할인일 때
+    prop = cost.proportional_offer_table(yv, p_main, monthly, y_tr.to_numpy(), oof["logit"],
+                                         X_tr["monthly_charges"].to_numpy())
+    prop.to_csv(TABLES / "proportional_offer.csv", index=False)
+    out["proportional_offer"] = prop.to_dict(orient="records")
 
     # 6. 운영 모니터링 시뮬레이션
     mon = monitoring.monitor_table(fitted["logit"], X_tr, X_te, y_te, FEATURES, np.random.default_rng(config.SEED))

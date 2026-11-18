@@ -313,6 +313,266 @@
     "weighted_worse_cases": 18,
     "weighted_max_loss": 5676.92
   },
+  "call_list": {
+    "rows": 578,
+    "matches_cost_rule": true,
+    "top_reason_share": {
+      "가입 기간·요금": 0.514,
+      "광섬유 인터넷": 0.478,
+      "월 단위 계약": 0.009
+    },
+    "talk_point_counts": {
+      "약정 전환 혜택 안내": 509,
+      "자동이체 전환 안내": 42,
+      "기술 지원·보안 서비스 체험 안내": 24,
+      "인터넷 품질·요금 만족도 확인": 3
+    },
+    "in_1month_discount_list": 382,
+    "head": [
+      {
+        "priority": 1,
+        "customer_id": "8884-ADFVN",
+        "contract": "Month-to-month",
+        "tenure_months": 7,
+        "monthly_charges": 101.95,
+        "churn_prob_pct": 80.6,
+        "expected_gain": 157.1,
+        "reason_1": "가입 7개월·월 $102",
+        "reason_2": "광섬유 인터넷",
+        "talk_point": "약정 전환 혜택 안내",
+        "in_1month_discount_list": 1
+      },
+      {
+        "priority": 2,
+        "customer_id": "5419-JPRRN",
+        "contract": "Month-to-month",
+        "tenure_months": 1,
+        "monthly_charges": 101.45,
+        "churn_prob_pct": 80.8,
+        "expected_gain": 156.7,
+        "reason_1": "가입 1개월·월 $101",
+        "reason_2": "광섬유 인터넷",
+        "talk_point": "약정 전환 혜택 안내",
+        "in_1month_discount_list": 1
+      },
+      {
+        "priority": 3,
+        "customer_id": "9681-OXGVC",
+        "contract": "Month-to-month",
+        "tenure_months": 5,
+        "monthly_charges": 100.5,
+        "churn_prob_pct": 80.5,
+        "expected_gain": 154.2,
+        "reason_1": "가입 5개월·월 $100",
+        "reason_2": "광섬유 인터넷",
+        "talk_point": "약정 전환 혜택 안내",
+        "in_1month_discount_list": 1
+      },
+      {
+        "priority": 4,
+        "customer_id": "7450-NWRTR",
+        "contract": "Month-to-month",
+        "tenure_months": 12,
+        "monthly_charges": 99.45,
+        "churn_prob_pct": 79.5,
+        "expected_gain": 149.8,
+        "reason_1": "가입 12개월·월 $99",
+        "reason_2": "광섬유 인터넷",
+        "talk_point": "약정 전환 혜택 안내",
+        "in_1month_discount_list": 1
+      },
+      {
+        "priority": 5,
+        "customer_id": "5567-WSELE",
+        "contract": "Month-to-month",
+        "tenure_months": 3,
+        "monthly_charges": 94.6,
+        "churn_prob_pct": 83.0,
+        "expected_gain": 148.4,
+        "reason_1": "가입 3개월·월 $95",
+        "reason_2": "광섬유 인터넷",
+        "talk_point": "약정 전환 혜택 안내",
+        "in_1month_discount_list": 1
+      },
+      {
+        "priority": 6,
+        "customer_id": "0107-YHINA",
+        "contract": "Month-to-month",
+        "tenure_months": 1,
+        "monthly_charges": 99.75,
+        "churn_prob_pct": 78.7,
+        "expected_gain": 148.3,
+        "reason_1": "가입 1개월·월 $100",
+        "reason_2": "광섬유 인터넷",
+        "talk_point": "약정 전환 혜택 안내",
+        "in_1month_discount_list": 1
+      },
+      {
+        "priority": 7,
+        "customer_id": "4910-GMJOT",
+        "contract": "Month-to-month",
+        "tenure_months": 1,
+        "monthly_charges": 94.6,
+        "churn_prob_pct": 82.7,
+        "expected_gain": 147.8,
+        "reason_1": "가입 1개월·월 $95",
+        "reason_2": "광섬유 인터넷",
+        "talk_point": "약정 전환 혜택 안내",
+        "in_1month_discount_list": 1
+      },
+      {
+        "priority": 8,
+        "customer_id": "2265-CYWIV",
+        "contract": "Month-to-month",
+        "tenure_months": 4,
+        "monthly_charges": 99.6,
+        "churn_prob_pct": 78.3,
+        "expected_gain": 147.2,
+        "reason_1": "가입 4개월·월 $100",
+        "reason_2": "광섬유 인터넷",
+        "talk_point": "약정 전환 혜택 안내",
+        "in_1month_discount_list": 1
+      },
+      {
+        "priority": 9,
+        "customer_id": "8149-RSOUN",
+        "contract": "Month-to-month",
+        "tenure_months": 1,
+        "monthly_charges": 93.85,
+        "churn_prob_pct": 82.8,
+        "expected_gain": 146.5,
+        "reason_1": "가입 1개월·월 $94",
+        "reason_2": "광섬유 인터넷",
+        "talk_point": "약정 전환 혜택 안내",
+        "in_1month_discount_list": 1
+      },
+      {
+        "priority": 10,
+        "customer_id": "8245-UMPYT",
+        "contract": "Month-to-month",
+        "tenure_months": 16,
+        "monthly_charges": 96.4,
+        "churn_prob_pct": 79.1,
+        "expected_gain": 143.0,
+        "reason_1": "광섬유 인터넷",
+        "reason_2": "월 단위 계약",
+        "talk_point": "약정 전환 혜택 안내",
+        "in_1month_discount_list": 1
+      }
+    ]
+  },
+  "experiment": {
+    "eligible_mean_pred": 0.5012,
+    "eligible_actual_rate": 0.5017,
+    "table": [
+      {
+        "save_rate": 0.1,
+        "treat_churn": 0.4511,
+        "control_share": 0.5,
+        "total_needed": 3116,
+        "control_n": 1558,
+        "control_cost": 13934.4278,
+        "save_rate_ci_halfwidth": 0.0665,
+        "total_to_call": 5194,
+        "connect_rate": 0.6
+      },
+      {
+        "save_rate": 0.1,
+        "treat_churn": 0.4511,
+        "control_share": 0.2,
+        "total_needed": 4869,
+        "control_n": 974,
+        "control_cost": 8711.2533,
+        "save_rate_ci_halfwidth": 0.0644,
+        "total_to_call": 8115,
+        "connect_rate": 0.6
+      },
+      {
+        "save_rate": 0.2,
+        "treat_churn": 0.401,
+        "control_share": 0.5,
+        "total_needed": 772,
+        "control_n": 386,
+        "control_cost": 22344.6074,
+        "save_rate_ci_halfwidth": 0.1259,
+        "total_to_call": 1287,
+        "connect_rate": 0.6
+      },
+      {
+        "save_rate": 0.2,
+        "treat_churn": 0.401,
+        "control_share": 0.2,
+        "total_needed": 1207,
+        "control_n": 242,
+        "control_cost": 14008.7953,
+        "save_rate_ci_halfwidth": 0.118,
+        "total_to_call": 2012,
+        "connect_rate": 0.6
+      },
+      {
+        "save_rate": 0.3,
+        "treat_churn": 0.3508,
+        "control_share": 0.5,
+        "total_needed": 338,
+        "control_n": 169,
+        "control_cost": 18054.5025,
+        "save_rate_ci_halfwidth": 0.178,
+        "total_to_call": 564,
+        "connect_rate": 0.6
+      },
+      {
+        "save_rate": 0.3,
+        "treat_churn": 0.3508,
+        "control_share": 0.2,
+        "total_needed": 529,
+        "control_n": 106,
+        "control_cost": 11324.1258,
+        "save_rate_ci_halfwidth": 0.161,
+        "total_to_call": 882,
+        "connect_rate": 0.6
+      }
+    ],
+    "n_connected_for_pm5pp": {
+      "10%": 5748,
+      "20%": 4964,
+      "30%": 4286
+    }
+  },
+  "proportional_offer": [
+    {
+      "discount_months": 0.5,
+      "threshold_prob": 0.2083,
+      "rule_contacted": 662,
+      "rule_profit": 33623.38,
+      "fixed_rule_contacted": 578,
+      "fixed_rule_profit": 32979.315,
+      "topk_share": 0.46,
+      "topk_profit": 33406.8,
+      "contact_all_profit": 21862.83
+    },
+    {
+      "discount_months": 1.0,
+      "threshold_prob": 0.4167,
+      "rule_contacted": 401,
+      "rule_profit": 13329.87,
+      "fixed_rule_contacted": 578,
+      "fixed_rule_profit": 9171.99,
+      "topk_share": 0.24,
+      "topk_profit": 13474.97,
+      "contact_all_profit": -22998.42
+    },
+    {
+      "discount_months": 2.0,
+      "threshold_prob": 0.8333,
+      "rule_contacted": 0,
+      "rule_profit": 0.0,
+      "fixed_rule_contacted": 578,
+      "fixed_rule_profit": -38442.66,
+      "topk_share": 0.0,
+      "topk_profit": 0.0,
+      "contact_all_profit": -112720.92
+    }
+  ],
   "monitoring": [
     {
       "scenario": "기준 (평가 데이터 그대로)",

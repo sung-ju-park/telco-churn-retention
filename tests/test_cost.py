@@ -35,3 +35,20 @@ def test_psi_zero_for_same_distribution_and_positive_for_shift():
     a = rng.normal(size=5000)
     assert monitoring.psi(a, a) < 1e-9
     assert monitoring.psi(a, a + 1.0) > 0.25
+
+
+def test_proportional_offer_makes_threshold_same_for_everyone():
+    # 혜택 = 월 요금 1개월분이면 요금과 관계없이 기준 확률이 1 / (0.2 × 12) = 0.4167 로 같다
+    monthly = np.array([20.0, 50.0, 110.0, 20.0, 50.0, 110.0])
+    p = np.array([0.41, 0.41, 0.41, 0.42, 0.42, 0.42])
+    contact = cost.cost_rule(p, monthly, offer_cost=monthly * 1.0, save_rate=0.2, lost_months=12)
+    assert contact.tolist() == [False, False, False, True, True, True]
+
+
+def test_sample_size_grows_when_effect_is_small():
+    from churn import experiment
+    big = experiment.n_per_group(0.5, 0.5 * 0.7)
+    small = experiment.n_per_group(0.5, 0.5 * 0.9)
+    assert small > big > 0
+    # 잘 알려진 값과 비교: 50% vs 40%, 양측 5%, 검정력 80% → 집단당 약 385~388명
+    assert 380 <= experiment.n_per_group(0.5, 0.4) <= 392
